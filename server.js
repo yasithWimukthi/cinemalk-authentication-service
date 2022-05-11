@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-// const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/authRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -20,7 +20,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 
 app.use((error, req, res, next) => {
     console.log(error);
@@ -36,6 +36,6 @@ mongoose
     )
     .then(result => {
         const server = app.listen(process.env.PORT || 3000);
-        console.log('Server started on port 3000');
+        console.log(`Server started on port 3000 ${server.address().port}`);
     })
     .catch(err => console.log(err));
