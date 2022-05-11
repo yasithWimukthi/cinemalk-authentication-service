@@ -2,8 +2,7 @@ const express = require('express');
 const { body } = require('express-validator/check');
 
 const User = require('../models/user');
-const authController = require('../controllers/auth');
-const {signup} = require("../controllers/auth");
+const {signup, login} = require("../controllers/auth");
 
 const router = express.Router();
 
@@ -31,9 +30,17 @@ router.post(
         body('lastName')
             .trim()
             .not()
+            .isEmpty(),
+        body('mobile')
+            .trim(),
+        body('type')
+            .trim()
+            .not()
             .isEmpty()
     ],
     signup
 );
+
+router.post('/login', login);
 
 module.exports = router;
