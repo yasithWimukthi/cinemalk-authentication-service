@@ -20,7 +20,6 @@ const userSchema = new Schema({
     },
     mobile: {
         type: String,
-        required: true
     },
     bookings: [
         {
