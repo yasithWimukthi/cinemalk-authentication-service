@@ -21,6 +21,9 @@ const userSchema = new Schema({
     mobile: {
         type: String,
     },
+    type: {
+        type: String,
+    },
     bookings: [
         {
             type: Schema.Types.ObjectId,
