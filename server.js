@@ -35,7 +35,7 @@ mongoose
         process.env.CONNECTION_URL,
     )
     .then(result => {
-        const server = app.listen(process.env.PORT || 3000);
-        console.log(`Server started on port 3000 ${server.address().port}`);
+        const server = app.listen(process.env.PORT || 4000);
+        console.log(`Server started on port ${server.address().port}`);
     })
     .catch(err => console.log(err));
