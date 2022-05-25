@@ -58,7 +58,6 @@ userSchema.methods.addToCart = async function (cartItemId) {
         cart.items.push(booking);
         const bookingPrice = booking.ticketPrice * booking.noOfTickets;
         cart.totalPrice += bookingPrice;
-        console.log('cart', cart, 'price', cart.totalPrice);
 
         //save the item in DB
         this.save();
@@ -72,7 +71,6 @@ userSchema.methods.removeFromCart = async function (cartItemId) {
         //find the booking which is to be removed from the cart
         let cart = this.cart;
         const bookingIndex = cart.items.findIndex(item => new String(item._id).trim() === new String(cartItemId).trim());
-        console.log('index', bookingIndex);
         if (bookingIndex != -1) {
             //find the booking which is to be removed from the cart
             const booking = await MovieBooking.findById(cartItemId);
@@ -93,11 +91,9 @@ userSchema.methods.clearCart = async function () {
     this.cart.items.map((item) => (
         this.bookings.push(item)
     ))
-    console.log('bbb', this.bookings);
     //clear the cart now
     this.cart.items = []
     this.cart.totalPrice = 0
-    console.log('ccc', this.cart);
     await this.save();
 }
 
@@ -105,7 +101,6 @@ userSchema.methods.deleteBooking = async function (bookingId) {
     try {
         let reservations = this.bookings;
         const reservationIndex = reservations.findIndex(item => new String(item._id).trim() === new String(bookingId).trim());
-        console.log('index', reservationIndex);
         if (reservationIndex != -1) {
             //remove booking from cart
             reservations.splice(reservationIndex, 1);
