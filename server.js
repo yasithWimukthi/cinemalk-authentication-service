@@ -1,11 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
+const movieBookingRoutes = require("./routes/MovieBooking");
 require('dotenv').config();
 
 const app = express();
+app.use(cors());
 
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
@@ -21,6 +24,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use("/api/cart", movieBookingRoutes);
 
 app.use((error, req, res, next) => {
     console.log(error);
