@@ -13,16 +13,7 @@ const setCurrentUser = (user_id) => {
         })
 }
 
-// MovieBooking: view all MovieBooking
-const viewAll = async (req, res) => {
-    const allMovieBooking = await MovieBooking.find();
-    res.status(200).json({
-        message: "All MovieBooking details",
-        data: allMovieBooking,
-    });
-}
-
-// MovieBooking: get all bookings of a specific User
+// Cart: get all saved cart items of a specific User
 const getCartDetails = async (req, res) => {
     const id = req.params.id;
 
@@ -38,7 +29,7 @@ const getCartDetails = async (req, res) => {
     }
 }
 
-// MovieBooking: add new MovieBooking
+// Cart: add new MovieBooking to cart
 const addMovieBookingToCart = (req, response) => {
 
     const user_id = req.query.user_id; //get the id of the current user
@@ -77,7 +68,7 @@ const addMovieBookingToCart = (req, response) => {
         });
 }
 
-// MovieBooking: delete MovieBooking
+// Cart: delete MovieBooking from cart
 const removeBookingFromCart = async (req, response) => {
     const bookingId = req.params.id;
 
@@ -96,17 +87,29 @@ const removeBookingFromCart = async (req, response) => {
     }, 500)
 }
 
-const clearCart = (req, res) => {
-    const userId = req.params.id;
-    //delete entire MovieBooking of this user
+// Cart: clear cart
+const clearCart = (req, response) => {
+    const user_id = req.query.user_id;
+    setCurrentUser(user_id);
+
+    setTimeout(() => {
+        //delete entire MovieBooking of this user
+        currentUser.clearCart()
+            .then((res) => {
+                response.status(200).json({msg: 'cart cleared', data: res})
+            })
+            .catch((err) => {
+            console.log('cart was not cleared', err);
+        })
+    }, 500)
 }
 
 
 const all ={
-    viewAll,
     addMovieBookingToCart,
     getCartDetails,
-    removeBookingFromCart
+    removeBookingFromCart,
+    clearCart
 }
 
 module.exports = all

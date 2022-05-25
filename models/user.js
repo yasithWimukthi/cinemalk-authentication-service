@@ -28,7 +28,7 @@ const userSchema = new Schema({
     bookings: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Post'
+            ref: 'MovieBooking'
         }
     ],
     cart: {
@@ -47,10 +47,10 @@ const userSchema = new Schema({
     }
 });
 
-userSchema.methods.addToCart = async function (bookingId) {
+userSchema.methods.addToCart = async function (cartItemId) {
     try {
         //find the booking which is to be added into the cart
-        const booking = await MovieBooking.findById(bookingId);
+        const booking = await MovieBooking.findById(cartItemId);
         console.log('booking', booking);
 
         //add this booking to the cart
@@ -67,15 +67,15 @@ userSchema.methods.addToCart = async function (bookingId) {
     }
 };
 
-userSchema.methods.removeFromCart = async function (bookingId) {
+userSchema.methods.removeFromCart = async function (cartItemId) {
     try {
         //find the booking which is to be removed from the cart
         let cart = this.cart;
-        const bookingIndex = cart.items.findIndex(item => new String(item._id).trim() === new String(bookingId).trim());
+        const bookingIndex = cart.items.findIndex(item => new String(item._id).trim() === new String(cartItemId).trim());
         console.log('index', bookingIndex);
         if (bookingIndex != -1) {
-            //find the booking which is to be added into the cart
-            const booking = await MovieBooking.findById(bookingId);
+            //find the booking which is to be removed from the cart
+            const booking = await MovieBooking.findById(cartItemId);
             //re-calculate the cart total
             cart.totalPrice = cart.totalPrice - (booking.ticketPrice * booking.noOfTickets);
             //remove booking from cart
@@ -87,5 +87,22 @@ userSchema.methods.removeFromCart = async function (bookingId) {
         console.log(err);
     }
 };
+
+userSchema.methods.clearCart = async function () {
+    //send the items in the cart to bookings array
+    this.cart.items.map((item) => (
+        this.bookings.push(item)
+    ))
+    console.log('bbb', this.bookings);
+    //clear the cart now
+    this.cart.items = []
+    this.cart.totalPrice = 0
+    console.log('ccc', this.cart);
+    await this.save();
+}
+
+userSchema.methods.deleteBooking = async function (bookingId) {
+
+}
 
 module.exports = mongoose.model('User', userSchema);
