@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 const  MovieBooking = require("../controllers/MovieBooking")
 
-// MovieBookings: view all MovieBookings
-router.get("/", MovieBooking.viewAll);
-
 // MovieBookings: get detais of a specific User
 router.get("/:id",MovieBooking.getCartDetails);
 
@@ -14,5 +11,7 @@ router.post("/", MovieBooking.addMovieBookingToCart);
 // MovieBookings: delete MovieBooking
 router.delete("/:id",MovieBooking.removeBookingFromCart);
 
+// MovieBookings: delete the whole cart
+router.delete("/",MovieBooking.clearCart);
 
 module.exports = router;

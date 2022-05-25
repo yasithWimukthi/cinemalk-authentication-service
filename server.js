@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
+const BookingHistory = require('./routes/Reservations');
 const movieBookingRoutes = require("./routes/MovieBooking");
 require('dotenv').config();
 
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 
 app.use('/api/auth', authRoutes);
 app.use("/api/cart", movieBookingRoutes);
+app.use('/api/reservations', BookingHistory)
 
 app.use((error, req, res, next) => {
     console.log(error);
