@@ -89,18 +89,24 @@ const removeBookingFromCart = async (req, response) => {
 
 // Cart: clear cart
 const clearCart = (req, response) => {
+    console.log('inside clear cart');
     const user_id = req.query.user_id;
     setCurrentUser(user_id);
 
     setTimeout(() => {
         //delete entire MovieBooking of this user
-        currentUser.clearCart()
+        try {
+            currentUser.clearCart()
             .then((res) => {
                 response.status(200).json({msg: 'cart cleared', data: res})
             })
             .catch((err) => {
             console.log('cart was not cleared', err);
         })
+        }
+        catch (err) {
+            console.log(err);
+        }
     }, 500)
 }
 

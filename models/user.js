@@ -100,7 +100,9 @@ userSchema.methods.clearCart = async function () {
 userSchema.methods.deleteBooking = async function (bookingId) {
     try {
         let reservations = this.bookings;
+        console.log('bookingid', bookingId);
         const reservationIndex = reservations.findIndex(item => new String(item._id).trim() === new String(bookingId).trim());
+        console.log('index', reservationIndex);
         if (reservationIndex != -1) {
             //remove booking from cart
             reservations.splice(reservationIndex, 1);
