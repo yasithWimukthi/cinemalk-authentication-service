@@ -12,6 +12,6 @@ router.post("/", MovieBooking.addMovieBookingToCart);
 router.delete("/:id",MovieBooking.removeBookingFromCart);
 
 // MovieBookings: delete the whole cart
-router.delete("/",MovieBooking.clearCart);
+router.delete("/clear-cart/:id",MovieBooking.clearCart);
 
 module.exports = router;

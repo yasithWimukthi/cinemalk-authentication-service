@@ -9,7 +9,7 @@ const movieBookingRoutes = require("./routes/MovieBooking");
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+
 
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
@@ -41,7 +41,7 @@ mongoose
         process.env.CONNECTION_URL,
     )
     .then(result => {
-        const server = app.listen(process.env.PORT || 4000);
+        const server = app.listen(process.env.PORT || 4001);
         console.log(`Server started on port ${server.address().port}`);
     })
     .catch(err => console.log(err));
